@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<canvas id="canvas" width="600" height="600"></canvas>
+<script src="https://cdn.rawgit.com/pshihn/rough/9be60b1e/dist/rough.min.js"></script>
+<script>
+  const canvas = document.getElementById("canvas");
+  const context = canvas.getContext('2d');
+  const rc = rough.canvas(canvas, {
+    options: {
+      fill: 'blue',
+      roughness: 1.5
+    }
+  });
+  const generator = rc.generator;
+  // get rect shape
+  const rect = rc.rectangle(0, 10, 100, 100);
+
+  let x = 0;
+  let step = (count) => {
+    context.clearRect(0, 0, 600, 600);
+
+    // translate x
+    context.translate(x, 0);
+    rc.rectangle(0, 10, 100, 100);
+    // clear translation
+    context.setTransform(1, 0, 0, 1, 0, 0);
+
+    x++;
+    if (x > 600) {
+      x = 0;
+    }
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+</script>
